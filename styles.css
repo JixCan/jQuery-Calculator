@@ -15,7 +15,7 @@
 } 
 
 #resultScreen{
-    width: 30vw;
+    width: 31vw;
     height: 5vh;
     border-style: inset;
     background-color: #A8C64E;
@@ -23,6 +23,7 @@
     text-align: right;
     font-size: 200%;
     color: #3C412C;
+    margin-left: 1vw;
 }
 
 .symbolButton{
@@ -37,5 +38,5 @@
 }
 
 #buttonEquals{
-    width: 30vw;
+    width: 25vw;
 }
