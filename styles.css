@@ -1,0 +1,40 @@
+@font-face { font-family: Digit; src: url('DS-DIGIT.TTF'); } 
+@font-face { font-family: Heavitas; src: url('Heavitas.ttf'); } 
+
+#container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 10px;
+    border-style: ridge;
+    padding: 30px;
+    width: max-content;
+    height: max-content;
+    background-color: #505050;
+}
+
+#resultScreen{
+    width: 30vw;
+    height: 5vh;
+    border-style: inset;
+    background-color: #A8C64E;
+    font-family: Digit, sans-serif;
+    text-align: right;
+    font-size: 200%;
+    color: #3C412C;
+}
+
+.symbolButton{
+    width: 7vw;
+    height: 6vh;
+    font-family: Heavitas, sans-serif;
+    background-color: #541a30;
+    color: #e5e0c2;
+    border-radius: 10px;
+    border-style: outset;
+    margin-top: 10px;
+}
+
+#buttonEquals{
+    width: 30vw;
+}

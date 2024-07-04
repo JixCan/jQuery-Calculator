@@ -10,8 +10,10 @@
         <link rel="stylesheet" type="text/css" media="screen" href="styles.css">
     </head>
     <body>
-        <input type="number" readonly="true" id="resultScreen">
-        <table>
+        <div id="container">
+            <div id="calculator">
+                <input type="number" readonly="true" id="resultScreen" value="0">
+            <table id="buttons">
             <tr>
                 <th><button class="symbolButton" id="button7">7</button></th>
                 <th><button class="symbolButton" id="button8">8</button></th>
@@ -36,9 +38,9 @@
                 <th><button class="symbolButton" id="buttonClear">C</button></th>
                 <th><button class="symbolButton" id="buttonAdd">+</button></th>
             </tr>
-            <tr>
-                <th><button class="symbolButton" id="buttonEquals">=</button></th>
-            </tr>
-        </table>
+            </table>
+            <button class="symbolButton" id="buttonEquals">=</button>
+            </div>
+        </div>
     </body>
 </html>
