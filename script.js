@@ -3,7 +3,9 @@ let currentNumber = 0;
 let lastOperation = "";
 let lastNumber = 0;
 let isNewNumber = false;
-const maxDigits = 11;
+const maxDigits = 10;
+
+//TODO: "9999999999" + "+-" + "-" -> "Error"
 
 $(document).ready(function(){
     $(".symbolButton").on({
@@ -17,12 +19,20 @@ $(document).ready(function(){
             let buttonValue = $(this).text();
             if (!isNaN(buttonValue)) {
                 if (isNewNumber) {
-                    currentNumber = parseInt(buttonValue);
+                    // Сначала проверяем, была ли уже введена точка
+                    if ($("#resultScreen").val().includes(".")) {
+                        currentNumber = parseInt(buttonValue);
+                        // Если точка была введена, просто добавляем цифру к текущему числу
+                        //currentNumber = parseFloat(currentNumber);
+                    } else {
+                        // Иначе, просто парсим число
+                        currentNumber = parseFloat(buttonValue);
+                    }
                     isNewNumber = false;
                 } else {
                     // Проверка на количество цифр
-                    if (currentNumber.toString().length < maxDigits) {
-                        currentNumber = currentNumber * 10 + parseInt(buttonValue);
+                    if ($("#resultScreen").val().includes(".") || currentNumber.toString().length < maxDigits) {
+                        currentNumber = parseFloat($("#resultScreen").val() + buttonValue.toString());
                     }
                 }
                 $("#resultScreen").val(currentNumber);
@@ -48,7 +58,7 @@ $(document).ready(function(){
                     if (currentNumber != 0) {
                         result /= currentNumber;
                     } else {
-                        $("#resultScreen").val("NaN");
+                        $("#resultScreen").val("Error");
                         disableButtons();
                         return;
                     }
@@ -83,7 +93,7 @@ $(document).ready(function(){
     }
 
     function formatResult(result) {
-        let resultStr = result.toString();
+        let resultStr = result.toFixed(maxDigits).toString();
         if (resultStr.includes(".")) {
             let [integerPart, fractionalPart] = resultStr.split(".");
             let maxFractionalLength = maxDigits - integerPart.length - 1; // -1 for the decimal point
@@ -99,6 +109,7 @@ $(document).ready(function(){
             fractionalPart = fractionalPart.substring(0, maxFractionalLength);
             resultStr = integerPart + "." + fractionalPart;
         }
+
 
         if (resultStr.length > maxDigits) {
             return "Error";
@@ -123,13 +134,22 @@ $(document).ready(function(){
         handleOperation("+");
     });
 
+    $("#buttonDot").click(function(){
+        let currentInput = $("#resultScreen").val();
+        // Проверка на наличие уже введенной точки
+        if (!currentInput.includes(".")) {
+            // Добавляем точку к текущему числу
+            $("#resultScreen").val(currentInput + ".");
+            // Обновляем текущее число
+            currentNumber = parseFloat($("#resultScreen").val());
+        }
+    });
+
     $("#buttonEquals").click(function(){
         if (lastOperation) {
             switch (lastOperation) {
                 case "+":
-                    console.log(result, " ", lastNumber);
                     result += lastNumber;
-                    console.log(result);
                     break;
                 case "-":
                     result -= lastNumber;
@@ -141,7 +161,7 @@ $(document).ready(function(){
                     if (lastNumber != 0) {
                         result /= lastNumber;
                     } else {
-                        $("#resultScreen").val("NaN");
+                        $("#resultScreen").val("Error");
                         disableButtons();
                         return;
                     }
@@ -150,7 +170,6 @@ $(document).ready(function(){
                     break;
             }
 
-            
             result = formatResult(result);
             result = parseFloat(result); // Ensure it's a float for formatting
 
@@ -178,6 +197,7 @@ $(document).ready(function(){
 
     $("#buttonSign").click(function() {
         currentNumber = -currentNumber;
+        lastNumber = -lastNumber;
         $("#resultScreen").val(currentNumber);
     });
 });
